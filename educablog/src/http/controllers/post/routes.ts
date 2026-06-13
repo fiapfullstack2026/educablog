@@ -6,12 +6,12 @@ import { create } from './create'
 import { update } from './update'
 import { remove } from './remove'
 
-export const router = express.Router()
+export const routerPosts = express.Router()
 
-router.get('/search', search)
+routerPosts.get('/search', search)
 
-router.get('/', list)
-router.get('/:id', get)
-router.post('/', create)
-router.put('/:id', update)
-router.delete('/:id', remove)
+routerPosts.get('/', list)
+routerPosts.get('/:id', get)
+routerPosts.post('/', create)
+routerPosts.put('/:id', update)
+routerPosts.delete('/:id', remove)
