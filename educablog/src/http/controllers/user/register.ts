@@ -6,12 +6,17 @@ export async function register(req: Request, resp: Response) {
   const registerBodySchema = z.object({
     username: z.string(),
     password: z.string(),
+    isProfessor: z.boolean().optional(),
   })
 
-  const { username, password } = registerBodySchema.parse(req.body)
+  const { username, password, isProfessor } = registerBodySchema.parse(req.body)
 
   const registerUseCase = makeRegisterUseCase()
-  const user = await registerUseCase.handler({ username, password })
+  const user = await registerUseCase.handler({
+    username,
+    password,
+    isProfessor,
+  })
 
   if (user) {
     return resp.status(201).send({

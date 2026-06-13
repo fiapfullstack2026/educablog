@@ -29,9 +29,13 @@ export async function signIn(req: Request, resp: Response) {
   }
 
   const jwtSecret = process.env.JWT_SECRET || 'dev-secret'
-  const token = jwt.sign({ username: user.username }, jwtSecret, {
-    expiresIn: '1h',
-  })
+  const token = jwt.sign(
+    { username: user.username, isProfessor: user.isProfessor },
+    jwtSecret,
+    {
+      expiresIn: '1h',
+    },
+  )
 
   return resp.status(200).send({ success: true, token })
 }
