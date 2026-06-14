@@ -11,7 +11,7 @@ export const routerPosts = express.Router()
 
 routerPosts.use(authenticate)
 routerPosts.get('/search', search)
-routerPosts.get('/', authorize, list)
+routerPosts.get('/', list)
 routerPosts.get('/:id', get)
 routerPosts.post('/', authorize, create)
 routerPosts.put('/:id', authorize, update)
