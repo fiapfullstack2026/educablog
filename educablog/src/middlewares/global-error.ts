@@ -19,7 +19,7 @@ export function globalError(
 
   if (err instanceof ResourceNotFoundError) {
     return res.status(404).json({
-      message: 'Post não encontrado',
+      message: err.message,
     })
   }
 
