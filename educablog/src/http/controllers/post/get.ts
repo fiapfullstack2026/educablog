@@ -3,15 +3,18 @@ import z from 'zod'
 import { makeGetPostUseCase } from '../../../use-cases/factory/make-get-post-use-case'
 
 export async function get(req: Request, res: Response) {
-    const paramsSchema = z.object({ id: z.string() })
-    const { id } = paramsSchema.parse(req.params)
+  const paramsSchema = z.object({
+    id: z.string(),
+  })
 
-    const getPostUseCase = makeGetPostUseCase()
-    const post = await getPostUseCase.handler(id)
+  const { id } = paramsSchema.parse(req.params)
 
-    if (!post) {
-      return res.status(404).json({ success: false, message: 'Post não encontrado' })
-    }
+  const getPostUseCase = makeGetPostUseCase()
 
-    return res.status(200).json({ success: true, data: post })
+  const post = await getPostUseCase.handler(id)
+
+  return res.status(200).json({
+    success: true,
+    data: post,
+  })
 }
