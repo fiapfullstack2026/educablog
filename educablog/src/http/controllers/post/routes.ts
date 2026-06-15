@@ -5,13 +5,14 @@ import { search } from './search'
 import { create } from './create'
 import { update } from './update'
 import { remove } from './remove'
+import { authenticate, authorize } from '../../middleware/jwt-validate'
 
-export const router = express.Router()
+export const routerPosts = express.Router()
 
-router.get('/search', search)
-
-router.get('/', list)
-router.get('/:id', get)
-router.post('/', create)
-router.put('/:id', update)
-router.delete('/:id', remove)
+routerPosts.use(authenticate)
+routerPosts.get('/search', search)
+routerPosts.get('/', list)
+routerPosts.get('/:id', get)
+routerPosts.post('/', authorize, create)
+routerPosts.put('/:id', authorize, update)
+routerPosts.delete('/:id', authorize, remove)
