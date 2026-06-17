@@ -187,6 +187,7 @@ export const swaggerDocument = {
       get: {
         tags: ['Posts'],
         summary: 'Lista todos os posts',
+        security: [{ bearerAuth: [] }],
         responses: {
           200: {
             description: 'Lista retornada com sucesso',
@@ -250,6 +251,7 @@ export const swaggerDocument = {
       get: {
         tags: ['Posts'],
         summary: 'Busca posts por palavra-chave',
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             in: 'query',
@@ -294,6 +296,7 @@ export const swaggerDocument = {
       get: {
         tags: ['Posts'],
         summary: 'Retorna um post pelo ID',
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             in: 'path',
