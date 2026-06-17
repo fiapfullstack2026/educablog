@@ -1,10 +1,8 @@
-import { ICategory } from './category.interface'
-
 export interface IPost {
   title: string
-  category: ICategory[]
+  discipline: string
   content: string
-  professor: string
+  teacher: string
   createdAt?: Date
   updatedAt?: Date
 }
