@@ -14,7 +14,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
   const jwtSecret = process.env.JWT_SECRET || 'dev-secret'
 
   try {
-    res.locals.user = jwt.verify(token, jwtSecret) as { isProfessor: boolean }
+    res.locals.user = jwt.verify(token, jwtSecret) as { isTeacher: boolean }
     next()
   } catch {
     return res
@@ -24,7 +24,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
 }
 
 export function authorize(_req: Request, res: Response, next: NextFunction) {
-  if (!res.locals.user?.isProfessor) {
+  if (!res.locals.user?.isTeacher) {
     return res
       .status(403)
       .send({ success: false, message: 'Acesso restrito a professores' })
