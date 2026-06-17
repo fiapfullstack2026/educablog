@@ -12,6 +12,13 @@ export const swaggerDocument = {
     { name: 'Usuários', description: 'Cadastro e autenticação' },
   ],
   components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
     schemas: {
       Post: {
         type: 'object',
@@ -204,6 +211,7 @@ export const swaggerDocument = {
       post: {
         tags: ['Posts'],
         summary: 'Cria um novo post',
+        security: [{ bearerAuth: [] }],
         requestBody: {
           required: true,
           content: {
@@ -323,6 +331,7 @@ export const swaggerDocument = {
       put: {
         tags: ['Posts'],
         summary: 'Atualiza um post existente',
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             in: 'path',
@@ -375,6 +384,7 @@ export const swaggerDocument = {
       delete: {
         tags: ['Posts'],
         summary: 'Remove um post',
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             in: 'path',
