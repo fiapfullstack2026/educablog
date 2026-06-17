@@ -9,10 +9,9 @@ import { authenticate, authorize } from '../../middleware/jwt-validate'
 
 export const routerPosts = express.Router()
 
-routerPosts.use(authenticate)
 routerPosts.get('/search', search)
 routerPosts.get('/', list)
 routerPosts.get('/:id', get)
-routerPosts.post('/', authorize, create)
-routerPosts.put('/:id', authorize, update)
-routerPosts.delete('/:id', authorize, remove)
+routerPosts.post('/', authenticate, authorize, create)
+routerPosts.put('/:id', authenticate, authorize, update)
+routerPosts.delete('/:id', authenticate, authorize, remove)
