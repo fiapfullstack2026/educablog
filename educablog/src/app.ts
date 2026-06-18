@@ -9,7 +9,7 @@ export const app = express()
 
 app.use(express.json())
 
-app.use('/post', routerPosts)
+app.use('/posts', routerPosts)
 app.use('/user', routerUser)
 
 app.use(globalError)
