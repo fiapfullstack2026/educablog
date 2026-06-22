@@ -9,11 +9,12 @@ async function startServer() {
   await connectDatabase(mongoUri)
 
   app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`)
+    console.log(`Servidor rodando em http://localhost:${port}`)
+    console.log(`Documentação da API disponível em http://localhost:${port}/docs`)
   })
 }
 
 startServer().catch((error) => {
-  console.error('Failed to start server', error)
+  console.error('Falha ao iniciar o servidor', error)
   process.exit(1)
 })

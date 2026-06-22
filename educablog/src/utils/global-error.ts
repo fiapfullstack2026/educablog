@@ -4,6 +4,22 @@ import { ZodError } from 'zod'
 import { Error as MongooseError } from 'mongoose'
 import { ResourceNotFoundError } from '../use-cases/errors/resource-not-found-error'
 
+interface HttpError extends Error {
+  statusCode: number
+  expose: boolean
+  type?: string
+}
+
+function isHttpError(err: unknown): err is HttpError {
+  return (
+    typeof err === 'object' &&
+    err !== null &&
+    'statusCode' in err &&
+    'expose' in err &&
+    (err as HttpError).expose === true
+  )
+}
+
 export function globalError(
   err: Error,
   _req: Request,
@@ -26,6 +42,15 @@ export function globalError(
   if (err instanceof MongooseError.CastError) {
     return res.status(400).json({
       message: 'ID inválido',
+    })
+  }
+
+  if (isHttpError(err)) {
+    return res.status(err.statusCode).json({
+      message:
+        err.type === 'entity.parse.failed'
+          ? 'JSON inválido no corpo da requisição'
+          : err.message,
     })
   }
 

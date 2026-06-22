@@ -1,5 +1,5 @@
 import express from 'express'
-import { globalError } from './middlewares/global-error'
+import { globalError } from './utils/global-error'
 import { routerPosts } from './http/controllers/post/routes'
 import { routerUser } from './http/controllers/user/routes'
 import swaggerUi from 'swagger-ui-express'
