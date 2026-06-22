@@ -3,13 +3,14 @@ version: '3.8'
 services:
   api:
     build: .
-    container_name: blog-api
+    container_name: educablog-api
     ports:
       - '3000:3000'
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongo:27017/blogdb
+      - MONGODB_URI=mongodb://mongo:27017/educablog
       - NODE_ENV=production
+      - JWT_SECRET=${JWT_SECRET:-dev-secret}
     depends_on:
       mongo:
         condition: service_healthy
@@ -17,7 +18,7 @@ services:
 
   mongo:
     image: mongo:7
-    container_name: blog-mongo
+    container_name: educablog-mongo
     ports:
       - '27017:27017'
     volumes:

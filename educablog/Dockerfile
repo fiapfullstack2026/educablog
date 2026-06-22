@@ -1,4 +1,4 @@
-FROM node:20-alpine AS builder
+FROM node:20-slim AS builder
 
 WORKDIR /app
 
@@ -10,12 +10,12 @@ COPY src ./src
 RUN npm run build
 
 # ── Production image ──────────────────────────────────────────────────────
-FROM node:20-alpine
+FROM node:20-slim
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci 
 
 COPY --from=builder /app/dist ./dist
 
