@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from 'express'
-import { ZodError } from 'zod'
+import { treeifyError, ZodError } from 'zod'
 import { Error as MongooseError } from 'mongoose'
 import { ResourceNotFoundError } from '../use-cases/errors/resource-not-found-error'
 
@@ -29,7 +29,7 @@ export function globalError(
   if (err instanceof ZodError) {
     return res.status(400).json({
       message: 'Erro de validação',
-      errors: err.format(),
+      errors: err.flatten().fieldErrors,
     })
   }
 
@@ -42,6 +42,13 @@ export function globalError(
   if (err instanceof MongooseError.CastError) {
     return res.status(400).json({
       message: 'ID inválido',
+    })
+  }
+
+   if (err instanceof MongooseError.ValidationError) {
+    return res.status(400).json({
+       message: 'Dados inválidos',
+       errors: err.errors,
     })
   }
 
