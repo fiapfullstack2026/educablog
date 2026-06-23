@@ -28,6 +28,7 @@ export function globalError(
 ) {
   if (err instanceof ZodError) {
     return res.status(400).json({
+      success: false,
       message: 'Erro de validação',
       errors: err.flatten().fieldErrors,
     })
@@ -35,18 +36,21 @@ export function globalError(
 
   if (err instanceof ResourceNotFoundError) {
     return res.status(404).json({
+      success: false,
       message: err.message,
     })
   }
 
   if (err instanceof MongooseError.CastError) {
     return res.status(400).json({
+      success: false,
       message: 'ID inválido',
     })
   }
 
    if (err instanceof MongooseError.ValidationError) {
     return res.status(400).json({
+      success: false,
        message: 'Dados inválidos',
        errors: err.errors,
     })
@@ -54,6 +58,7 @@ export function globalError(
 
   if (isHttpError(err)) {
     return res.status(err.statusCode).json({
+      success: false,
       message:
         err.type === 'entity.parse.failed'
           ? 'JSON inválido no corpo da requisição'
@@ -64,6 +69,7 @@ export function globalError(
   console.error(err)
 
   return res.status(500).json({
+    success: false,
     message: 'Erro interno do servidor',
   })
 }

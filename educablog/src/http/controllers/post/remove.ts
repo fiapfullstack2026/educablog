@@ -16,6 +16,5 @@ export async function remove(req: Request, res: Response) {
   }
 
   return res
-    .status(200)
-    .json({ success: true, message: 'Post removido com sucesso' })
+    .status(204).send()
 }

@@ -26,5 +26,5 @@ export async function update(req: Request, resp: Response) {
     teacher,
   })
 
-  return resp.status(200).send()
+  return resp.status(204).send()
 }
