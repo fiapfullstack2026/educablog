@@ -120,6 +120,16 @@ export const swaggerDocument = {
           message: { type: 'string', example: 'Credenciais inválidas' },
         },
       },
+      UserAlreadyExistsError: {
+        type: 'object',
+        properties: {
+          success: { type: 'boolean', example: false },
+          message: {
+            type: 'string',
+            example: 'Usuário com este username e perfil já existe',
+          },
+        },
+      },
       SuccessMessage: {
         type: 'object',
         properties: {
@@ -161,10 +171,18 @@ export const swaggerDocument = {
             },
           },
           400: {
-            description: 'Dados inválidos ou usuário já existe',
+            description: 'Dados inválidos',
             content: {
               'application/json': {
                 schema: { $ref: '#/components/schemas/BadRequestError' },
+              },
+            },
+          },
+          409: {
+            description: 'Usuário já existe',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/UserAlreadyExistsError' },
               },
             },
           },

@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 import { treeifyError, ZodError } from 'zod'
 import { Error as MongooseError } from 'mongoose'
 import { ResourceNotFoundError } from '../use-cases/errors/resource-not-found-error'
+import { UserAlreadyExistsError } from '../use-cases/errors/user-already-exists-error'
 
 interface HttpError extends Error {
   statusCode: number
@@ -65,6 +66,13 @@ export function globalError(
           : err.message,
     })
   }
+
+  if (err instanceof UserAlreadyExistsError) {
+  return res.status(409).json({
+    success: false,
+    message: err.message,
+  })
+}
 
   console.error(err)
 
