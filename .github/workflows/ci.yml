@@ -31,8 +31,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Run tests
-        run: npm run test:ci
+      - name: Run tests with coverage
+        run: npm run test:coverage:ci
 
       - name: Upload coverage report
         if: always()
