@@ -3,7 +3,8 @@ import { IUser } from '../../entities/models/user.interface'
 import { IUserRepository } from '../user.repository.interface'
 import { userSchema } from '../../entities/user.schema'
 
-const UserModel = mongoose.models.User || mongoose.model<IUser>('User', userSchema)
+const UserModel =
+  mongoose.models.User || mongoose.model<IUser>('User', userSchema)
 
 export class UserRepository implements IUserRepository {
   async signIn(username: string): Promise<IUser | undefined> {
@@ -14,7 +15,10 @@ export class UserRepository implements IUserRepository {
     return (await UserModel.findOne({ username }).lean()) || undefined
   }
 
-  async findByUsernameAndRole(username: string, isTeacher: boolean): Promise<IUser | undefined> {
+  async findByUsernameAndRole(
+    username: string,
+    isTeacher: boolean,
+  ): Promise<IUser | undefined> {
     return (
       (await UserModel.findOne({ username, isTeacher }).lean()) || undefined
     )

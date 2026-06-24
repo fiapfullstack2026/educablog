@@ -10,7 +10,9 @@ async function startServer() {
 
   app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`)
-    console.log(`Documentação da API disponível em http://localhost:${port}/docs`)
+    console.log(
+      `Documentação da API disponível em http://localhost:${port}/docs`,
+    )
   })
 }
 

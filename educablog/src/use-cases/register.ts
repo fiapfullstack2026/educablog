@@ -17,9 +17,9 @@ export class RegisterUseCase {
     if (existingUser !== undefined) {
       throw new UserAlreadyExistsError()
     }
-    
+
     const hashedPassword = await bcrypt.hash(user.password, 10)
-    
+
     return this.repository.create({
       ...user,
       isTeacher,

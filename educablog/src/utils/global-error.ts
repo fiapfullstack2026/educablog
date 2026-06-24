@@ -49,11 +49,11 @@ export function globalError(
     })
   }
 
-   if (err instanceof MongooseError.ValidationError) {
+  if (err instanceof MongooseError.ValidationError) {
     return res.status(400).json({
       success: false,
-       message: 'Dados inválidos',
-       errors: err.errors,
+      message: 'Dados inválidos',
+      errors: err.errors,
     })
   }
 
@@ -68,11 +68,11 @@ export function globalError(
   }
 
   if (err instanceof UserAlreadyExistsError) {
-  return res.status(409).json({
-    success: false,
-    message: err.message,
-  })
-}
+    return res.status(409).json({
+      success: false,
+      message: err.message,
+    })
+  }
 
   console.error(err)
 

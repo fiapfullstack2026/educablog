@@ -214,7 +214,9 @@ export const swaggerDocument = {
             description: 'Credenciais inválidas',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/InvalidCredentialsError' },
+                schema: {
+                  $ref: '#/components/schemas/InvalidCredentialsError',
+                },
               },
             },
           },
@@ -225,7 +227,7 @@ export const swaggerDocument = {
                 schema: { $ref: '#/components/schemas/NotFoundError' },
               },
             },
-          },         
+          },
         },
       },
     },
@@ -277,7 +279,7 @@ export const swaggerDocument = {
         },
         responses: {
           201: {
-            description: 'Post criado com sucesso',          
+            description: 'Post criado com sucesso',
           },
           400: {
             description: 'Dados inválidos',
@@ -428,7 +430,7 @@ export const swaggerDocument = {
         },
         responses: {
           204: {
-            description: 'Post atualizado com sucesso'            
+            description: 'Post atualizado com sucesso',
           },
           400: {
             description: 'Dados inválidos',
@@ -478,7 +480,7 @@ export const swaggerDocument = {
         ],
         responses: {
           204: {
-            description: 'Post removido com sucesso'           
+            description: 'Post removido com sucesso',
           },
           400: {
             description: 'Dados inválidos',

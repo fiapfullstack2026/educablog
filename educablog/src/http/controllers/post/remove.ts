@@ -15,6 +15,5 @@ export async function remove(req: Request, res: Response) {
       .json({ success: false, message: 'Post não encontrado' })
   }
 
-  return res
-    .status(204).send()
+  return res.status(204).send()
 }
