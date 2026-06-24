@@ -1,7 +1,7 @@
 export const swaggerDocument = {
   openapi: '3.0.0',
   info: {
-    title: 'Blog API',
+    title: 'EducaBlog API',
     version: '1.0.0',
     description:
       'API de blogging dinâmico para professores da rede pública — FIAP PosTech FSDT Fase 02',
