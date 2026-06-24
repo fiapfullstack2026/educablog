@@ -1,7 +1,7 @@
 export const swaggerDocument = {
   openapi: '3.0.0',
   info: {
-    title: 'Blog API',
+    title: 'EducaBlog API',
     version: '1.0.0',
     description:
       'API de blogging dinâmico para professores da rede pública — FIAP PosTech FSDT Fase 02',
@@ -85,11 +85,49 @@ export const swaggerDocument = {
           },
         },
       },
-      Error: {
+      NotFoundError: {
         type: 'object',
         properties: {
           success: { type: 'boolean', example: false },
           message: { type: 'string', example: 'Não encontrado' },
+        },
+      },
+      BadRequestError: {
+        type: 'object',
+        properties: {
+          success: { type: 'boolean', example: false },
+          message: { type: 'string', example: 'Dados inválidos' },
+        },
+      },
+      NotAuthorizedError: {
+        type: 'object',
+        properties: {
+          success: { type: 'boolean', example: false },
+          message: { type: 'string', example: 'Token não informado' },
+        },
+      },
+      ForbiddenError: {
+        type: 'object',
+        properties: {
+          success: { type: 'boolean', example: false },
+          message: { type: 'string', example: 'Acesso proibido' },
+        },
+      },
+      InvalidCredentialsError: {
+        type: 'object',
+        properties: {
+          success: { type: 'boolean', example: false },
+          message: { type: 'string', example: 'Credenciais inválidas' },
+        },
+      },
+      UserAlreadyExistsError: {
+        type: 'object',
+        properties: {
+          success: { type: 'boolean', example: false },
+          message: {
+            type: 'string',
+            example: 'Usuário com este username e perfil já existe',
+          },
         },
       },
       SuccessMessage: {
@@ -133,10 +171,18 @@ export const swaggerDocument = {
             },
           },
           400: {
-            description: 'Dados inválidos ou usuário já existe',
+            description: 'Dados inválidos',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
+                schema: { $ref: '#/components/schemas/BadRequestError' },
+              },
+            },
+          },
+          409: {
+            description: 'Usuário já existe',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/UserAlreadyExistsError' },
               },
             },
           },
@@ -164,22 +210,22 @@ export const swaggerDocument = {
               },
             },
           },
-          400: {
-            description: 'Usuário não encontrado',
-            content: {
-              'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
-              },
-            },
-          },
           401: {
             description: 'Credenciais inválidas',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
+                schema: { $ref: '#/components/schemas/InvalidCredentialsError' },
               },
             },
           },
+          404: {
+            description: 'Usuário não encontrado',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/NotFoundError' },
+              },
+            },
+          },         
         },
       },
     },
@@ -207,6 +253,14 @@ export const swaggerDocument = {
               },
             },
           },
+          401: {
+            description: 'Não autorizado',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/NotAuthorizedError' },
+              },
+            },
+          },
         },
       },
       post: {
@@ -223,24 +277,29 @@ export const swaggerDocument = {
         },
         responses: {
           201: {
-            description: 'Post criado com sucesso',
-            content: {
-              'application/json': {
-                schema: {
-                  type: 'object',
-                  properties: {
-                    success: { type: 'boolean', example: true },
-                    data: { $ref: '#/components/schemas/Post' },
-                  },
-                },
-              },
-            },
+            description: 'Post criado com sucesso',          
           },
           400: {
             description: 'Dados inválidos',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
+                schema: { $ref: '#/components/schemas/BadRequestError' },
+              },
+            },
+          },
+          401: {
+            description: 'Não autorizado',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/NotAuthorizedError' },
+              },
+            },
+          },
+          403: {
+            description: 'Proibido',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ForbiddenError' },
               },
             },
           },
@@ -285,7 +344,15 @@ export const swaggerDocument = {
             description: 'Parâmetro "q" ausente',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
+                schema: { $ref: '#/components/schemas/BadRequestError' },
+              },
+            },
+          },
+          401: {
+            description: 'Não autorizado',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/NotAuthorizedError' },
               },
             },
           },
@@ -321,11 +388,19 @@ export const swaggerDocument = {
               },
             },
           },
+          401: {
+            description: 'Não autorizado',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/NotAuthorizedError' },
+              },
+            },
+          },
           404: {
             description: 'Post não encontrado',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
+                schema: { $ref: '#/components/schemas/NotFoundError' },
               },
             },
           },
@@ -352,25 +427,30 @@ export const swaggerDocument = {
           },
         },
         responses: {
-          200: {
-            description: 'Post atualizado com sucesso',
-            content: {
-              'application/json': {
-                schema: {
-                  type: 'object',
-                  properties: {
-                    success: { type: 'boolean', example: true },
-                    data: { $ref: '#/components/schemas/Post' },
-                  },
-                },
-              },
-            },
+          204: {
+            description: 'Post atualizado com sucesso'            
           },
           400: {
             description: 'Dados inválidos',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
+                schema: { $ref: '#/components/schemas/BadRequestError' },
+              },
+            },
+          },
+          401: {
+            description: 'Não autorizado',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/NotAuthorizedError' },
+              },
+            },
+          },
+          403: {
+            description: 'Proibido',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ForbiddenError' },
               },
             },
           },
@@ -378,7 +458,7 @@ export const swaggerDocument = {
             description: 'Post não encontrado',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
+                schema: { $ref: '#/components/schemas/NotFoundError' },
               },
             },
           },
@@ -397,11 +477,30 @@ export const swaggerDocument = {
           },
         ],
         responses: {
-          200: {
-            description: 'Post removido com sucesso',
+          204: {
+            description: 'Post removido com sucesso'           
+          },
+          400: {
+            description: 'Dados inválidos',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/SuccessMessage' },
+                schema: { $ref: '#/components/schemas/BadRequestError' },
+              },
+            },
+          },
+          401: {
+            description: 'Não autorizado',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/NotAuthorizedError' },
+              },
+            },
+          },
+          403: {
+            description: 'Proibido',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ForbiddenError' },
               },
             },
           },
@@ -409,7 +508,7 @@ export const swaggerDocument = {
             description: 'Post não encontrado',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schemas/Error' },
+                schema: { $ref: '#/components/schemas/NotFoundError' },
               },
             },
           },
