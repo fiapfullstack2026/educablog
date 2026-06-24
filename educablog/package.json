@@ -9,8 +9,10 @@
     "build": "tsup src --out-dir dist",
     "lint": "eslint src --ext .ts",
     "lint:fix": "npx eslint src --ext .ts --fix",
-    "test": "vitest --ui --config src/test/vitest.config.ts",
-    "test:coverage": "vitest --ui --coverage --config src/test/vitest.config.ts"
+    "test": "vitest --ui --config test/vitest.config.ts",
+    "test:coverage": "vitest --ui --coverage --config test/vitest.config.ts",
+    "test:ci": "vitest run --reporter=verbose --config test/vitest.config.ts",
+    "test:coverage:ci": "vitest run --coverage --reporter=verbose --config test/vitest.config.ts"
   },
   "keywords": [
     "FIAP",

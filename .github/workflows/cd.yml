@@ -1,0 +1,91 @@
+name: CD
+
+on:
+  push:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=sha-
+            type=raw,value=latest
+
+      # Usa o Dockerfile existente em educablog/
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./educablog
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    name: Deploy via SSH
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Copia o docker-compose.yml do projeto para o servidor
+      - name: Copy docker-compose.yml to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: educablog/docker-compose.yml
+          target: ~/educablog
+          strip_components: 1
+
+      # Usa o docker-compose.yml para subir api + mongo com a imagem pré-construída
+      - name: Deploy with docker compose
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: IMAGE_NAME
+          script: |
+            cd ~/educablog
+
+            echo "${{ secrets.GITHUB_TOKEN }}" | \
+              docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            API_IMAGE=ghcr.io/${{ env.IMAGE_NAME }}:latest \
+            JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            docker compose pull api
+
+            API_IMAGE=ghcr.io/${{ env.IMAGE_NAME }}:latest \
+            JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            docker compose up -d
+
+            docker image prune -f

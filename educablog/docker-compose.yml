@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   api:
+    image: ${API_IMAGE:-educablog-api}
     build: .
     container_name: educablog-api
     ports:
