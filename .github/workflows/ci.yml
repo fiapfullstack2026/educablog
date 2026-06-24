@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: educablog/src/test/report
+          path: educablog/src/test/coverage
           retention-days: 7
