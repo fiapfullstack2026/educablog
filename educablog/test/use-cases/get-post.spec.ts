@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
-import { GetPostUseCase } from '../../use-cases/get-post'
-import { ResourceNotFoundError } from '../../use-cases/errors/resource-not-found-error'
+import { GetPostUseCase } from '../../src/use-cases/get-post'
+import { ResourceNotFoundError } from '../../src/use-cases/errors/resource-not-found-error'
 
 describe('GetPostUseCase', () => {
   it('deve retornar um post pelo id', async () => {

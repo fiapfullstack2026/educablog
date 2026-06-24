@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { ListPostsUseCase } from '../../use-cases/list-posts'
+import { ListPostsUseCase } from '../../src/use-cases/list-posts'
 
 describe('ListPostsUseCase', () => {
   it('deve listar posts', async () => {

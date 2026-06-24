@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import type { Request, Response } from 'express'
-import { list } from '../../../http/controllers/post/list'
+import { list } from '../../../src/http/controllers/post/list'
 
 const mockHandler = vi.hoisted(() => vi.fn())
 
-vi.mock('../../../use-cases/factory/make-list-posts-use-case', () => ({
+vi.mock('../../../src/use-cases/factory/make-list-posts-use-case', () => ({
   makeListPostsUseCase: () => ({ handler: mockHandler }),
 }))
 

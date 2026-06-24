@@ -2,4 +2,4 @@
 .env
 /dist
 /test/coverage
-/test/html
+/test/html/*

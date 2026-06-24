@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import type { Request, Response } from 'express'
 import { ZodError } from 'zod'
-import { update } from '../../../http/controllers/post/update'
+import { update } from '../../../src/http/controllers/post/update'
 
 const mockHandler = vi.hoisted(() => vi.fn())
 
-vi.mock('../../../use-cases/factory/make-update-post-use-case', () => ({
+vi.mock('../../../src/use-cases/factory/make-update-post-use-case', () => ({
   makeUpdatePostUseCase: () => ({ handler: mockHandler }),
 }))
 
@@ -34,7 +34,7 @@ describe('PUT /post/:id — update controller', () => {
     await update(req, res)
 
     expect(mockHandler).toHaveBeenCalledWith(validParams.id, validBody)
-    expect(res.status).toHaveBeenCalledWith(200)
+    expect(res.status).toHaveBeenCalledWith(204)
     expect(res.send).toHaveBeenCalledWith()
   })
 

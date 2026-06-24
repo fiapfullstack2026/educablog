@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import type { Request, Response } from 'express'
 import { ZodError } from 'zod'
-import { create } from '../../../http/controllers/post/create'
+import { create } from '../../../src/http/controllers/post/create'
 
 const mockHandler = vi.hoisted(() => vi.fn())
 
-vi.mock('../../../use-cases/factory/make-create-post-use-case', () => ({
+vi.mock('../../../src/use-cases/factory/make-create-post-use-case', () => ({
   makeCreatePostUseCase: () => ({ handler: mockHandler }),
 }))
 
@@ -21,7 +21,7 @@ const validBody = {
   teacher: 'Prof. Ada',
 }
 
-describe('POST /post — create controller', () => {
+describe('POST /posts — create controller', () => {
   beforeEach(() => mockHandler.mockReset())
 
   it('retorna 201 e chama handler com corpo validado com sucesso', async () => {

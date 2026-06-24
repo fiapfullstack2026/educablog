@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { PostRepository } from '../../repositories/mongoose/post.repository'
-import { IPost } from '../../entities/models/post.interface'
+import { PostRepository } from '../../src/repositories/mongoose/post.repository'
+import { IPost } from '../../src/entities/models/post.interface'
 
 const mockLean = vi.hoisted(() => vi.fn())
 const mockSort = vi.hoisted(() => vi.fn(() => ({ lean: mockLean })))
