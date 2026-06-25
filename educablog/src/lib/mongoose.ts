@@ -7,6 +7,7 @@ export async function connectDatabase(uri: string) {
     return mongoose
   }
 
+  await mongoose.connect(uri)
   console.log('Banco de dados conectado')
-  return mongoose.connect(uri)
+  return mongoose
 }
