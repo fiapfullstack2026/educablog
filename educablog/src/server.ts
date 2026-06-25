@@ -1,6 +1,4 @@
 import { app } from './app'
-import { routerPosts } from './http/controllers/post/routes'
-import { routerUser } from './http/controllers/user/routes'
 import { connectDatabase } from './lib/mongoose'
 
 const port = process.env.PORT ?? 3000
@@ -9,15 +7,16 @@ const mongoUri =
 
 async function startServer() {
   await connectDatabase(mongoUri)
-  app.use('/post', routerPosts)
-  app.use('/user', routerUser)
 
   app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`)
+    console.log(`Servidor rodando em http://localhost:${port}`)
+    console.log(
+      `Documentação da API disponível em http://localhost:${port}/docs`,
+    )
   })
 }
 
 startServer().catch((error) => {
-  console.error('Failed to start server', error)
+  console.error('Falha ao iniciar o servidor', error)
   process.exit(1)
 })

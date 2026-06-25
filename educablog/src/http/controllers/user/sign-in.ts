@@ -30,7 +30,7 @@ export async function signIn(req: Request, resp: Response) {
 
   const jwtSecret = process.env.JWT_SECRET || 'dev-secret'
   const token = jwt.sign(
-    { username: user.username, isProfessor: user.isProfessor },
+    { username: user.username, isTeacher: user.isTeacher },
     jwtSecret,
     {
       expiresIn: '1h',

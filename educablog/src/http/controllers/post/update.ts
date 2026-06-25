@@ -5,14 +5,14 @@ import { makeUpdatePostUseCase } from '../../../use-cases/factory/make-update-po
 export async function update(req: Request, resp: Response) {
   const registerBodySchema = z.object({
     title: z.string(),
-    category: z.array(z.object({ name: z.string() })),
+    discipline: z.string(),
     content: z.string(),
-    professor: z.string(),
+    teacher: z.string(),
   })
 
   const registerParamSchema = z.object({ id: z.string() })
 
-  const { title, category, content, professor } = registerBodySchema.parse(
+  const { title, discipline, content, teacher } = registerBodySchema.parse(
     req.body,
   )
 
@@ -21,10 +21,10 @@ export async function update(req: Request, resp: Response) {
   const updatePostUseCase = makeUpdatePostUseCase()
   await updatePostUseCase.handler(id, {
     title,
-    category,
+    discipline,
     content,
-    professor,
+    teacher,
   })
 
-  return resp.status(200).send()
+  return resp.status(204).send()
 }

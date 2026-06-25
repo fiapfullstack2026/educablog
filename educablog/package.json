@@ -8,7 +8,11 @@
     "start": "node dist/server.js",
     "build": "tsup src --out-dir dist",
     "lint": "eslint src --ext .ts",
-    "lint:fix": "npx eslint src --ext .ts --fix"
+    "lint:fix": "npx eslint src --ext .ts --fix",
+    "test": "vitest --ui --config test/vitest.config.ts",
+    "test:coverage": "vitest --ui --coverage --config test/vitest.config.ts",
+    "test:ci": "vitest run --reporter=verbose --config test/vitest.config.ts",
+    "test:coverage:ci": "vitest run --coverage --reporter=verbose --config test/vitest.config.ts"
   },
   "keywords": [
     "FIAP",
@@ -22,8 +26,11 @@
     "@types/jsonwebtoken": "9.0.10",
     "@types/mongoose": "5.11.96",
     "@types/node": "25.9.1",
+    "@types/swagger-ui-express": "4.1.8",
     "@typescript-eslint/eslint-plugin": "8.60.1",
     "@typescript-eslint/parser": "8.60.1",
+    "@vitest/coverage-v8": "4.1.9",
+    "@vitest/ui": "4.1.9",
     "eslint": "8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-standard": "17.1.0",
@@ -36,7 +43,8 @@
     "tsup": "8.5.1",
     "tsx": "4.22.4",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.60.1"
+    "typescript-eslint": "8.60.1",
+    "vitest": "4.1.9"
   },
   "dependencies": {
     "bcryptjs": "3.0.3",
@@ -44,6 +52,7 @@
     "express": "5.2.1",
     "jsonwebtoken": "9.0.3",
     "mongoose": "9.6.3",
+    "swagger-ui-express": "5.0.1",
     "zod": "4.4.3"
   }
 }
