@@ -10,7 +10,7 @@ services:
     environment:
       - PORT=3000
       - MONGODB_URI=mongodb://mongo:27017/educablog
-      - NODE_ENV=production
+      - NODE_ENV=development
       - JWT_SECRET=${JWT_SECRET:-dev-secret}
     depends_on:
       mongo:
