@@ -1,5 +1,6 @@
 const serverUrl = process.env.API_URL ?? 'http://localhost:3000'
-const envinroment = process.env.NODE_ENV === 'production' ? 'Produção' : 'Desenvolvimento'
+const envinroment =
+  process.env.NODE_ENV === 'production' ? 'Produção' : 'Desenvolvimento'
 export const swaggerDocument = {
   openapi: '3.0.0',
   info: {
