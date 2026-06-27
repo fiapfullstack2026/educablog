@@ -1,24 +1,24 @@
-# Etapa de build
-FROM node:20-alpine AS builder
+# ── Stage 1: build ───────────────────────────────────────────────────────
+FROM node:20-slim AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
+RUN npm ci
 
-RUN npm install
-
-COPY . .
-
+COPY tsconfig.json ./
+COPY src ./src
 RUN npm run build
 
-# Etapa final
-FROM node:20-alpine
+# ── Stage 2: production ──────────────────────────────────────────────────
+FROM node:20-slim
 
 WORKDIR /app
 
-COPY package*.json ./
+ENV NODE_ENV=production
 
-RUN npm install --omit=dev
+COPY package*.json ./
+RUN npm ci --omit=dev --ignore-scripts
 
 COPY --from=builder /app/dist ./dist
 
