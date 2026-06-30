@@ -1,3 +1,6 @@
+const serverUrl = process.env.API_URL ?? 'http://localhost:3000'
+const envinroment =
+  process.env.NODE_ENV === 'production' ? 'Produção' : 'Desenvolvimento'
 export const swaggerDocument = {
   openapi: '3.0.0',
   info: {
@@ -6,7 +9,7 @@ export const swaggerDocument = {
     description:
       'API de blogging dinâmico para professores da rede pública — FIAP PosTech FSDT Fase 02',
   },
-  servers: [{ url: 'http://localhost:3000', description: 'Desenvolvimento' }],
+  servers: [{ url: serverUrl, description: envinroment }],
   tags: [
     { name: 'Posts', description: 'Gerenciamento de postagens' },
     { name: 'Usuários', description: 'Cadastro e autenticação' },
